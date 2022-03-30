@@ -8,6 +8,7 @@ type Repository interface {
 	Create(p *Products) error
 	Update(p *Products) error
 	Delete(id uint64) error
+	GetByKeyword(keyword string) ([]*Products, error)
 }
 type repository struct {
 	db *gorm.DB
@@ -15,6 +16,13 @@ type repository struct {
 
 func NewRepository(db *gorm.DB) Repository {
 	return &repository{db: db}
+}
+
+// GetByKeyword implements Repository
+func (repo *repository) GetByKeyword(keyword string) (products []*Products, err error) {
+
+	results := repo.db.Where("name LIKE ?", "%"+keyword+"%").Find(&products)
+	return products, results.Error
 }
 
 // Create implements Repository
