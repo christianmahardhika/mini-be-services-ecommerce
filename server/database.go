@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/christianmahardhika/mini-be-services-ecommerce/config"
+	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/products"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -24,6 +25,8 @@ func InitDb(config config.DBConfig) {
 		log.Panicf("Error while connecting to DB, err: %s", err)
 	}
 
+	migrateDb()
+
 }
 
 func GetDbConnection(config config.DBConfig) *gorm.DB {
@@ -31,4 +34,11 @@ func GetDbConnection(config config.DBConfig) *gorm.DB {
 		InitDb(config)
 	}
 	return dbConn
+}
+
+func migrateDb() {
+	err := dbConn.AutoMigrate(&products.Products{})
+	if err != nil {
+		log.Panicf("Error while migrating DB, err: %s", err)
+	}
 }
