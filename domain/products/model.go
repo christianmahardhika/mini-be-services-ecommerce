@@ -7,6 +7,7 @@ type Products struct {
 	Name      string    `json:"name"`
 	Price     int64     `json:"price"`
 	Promo     string    `json:"promo"`
+	Quantity  int64     `json:"quantity"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
