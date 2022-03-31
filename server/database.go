@@ -6,6 +6,7 @@ import (
 
 	"github.com/christianmahardhika/mini-be-services-ecommerce/config"
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/products"
+	"github.com/christianmahardhika/mini-be-services-ecommerce/pkg/seeds"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -26,6 +27,11 @@ func InitDb(config config.DBConfig) {
 	}
 
 	migrateDb()
+	for _, seed := range seeds.All() {
+		if err := seed.Run(dbConn); err != nil {
+			log.Fatalf("Running seed '%s', failed with error: %s", seed.Name, err)
+		}
+	}
 
 }
 
