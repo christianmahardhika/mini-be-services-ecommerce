@@ -2,7 +2,6 @@ package order
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 
 	"github.com/christianmahardhika/mini-be-services-ecommerce/pkg/helper"
@@ -87,7 +86,6 @@ func (uc *useCase) PlaceOrder() (*[]Order, error) {
 	}
 
 	// calculate total cart
-	fmt.Println(totalCart)
 	resultOrder, _ := uc.repo.GetByOrderID(orderID)
 	for _, order := range resultOrder {
 		order.TotalCart = totalCart
