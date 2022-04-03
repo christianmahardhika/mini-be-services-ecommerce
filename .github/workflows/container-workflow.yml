@@ -2,7 +2,7 @@ name: Application Kubernetes Release
 
 on:
   push:
-    branch-ignore:
+    branch:
       - 'main'
     tags:
       - '*'
