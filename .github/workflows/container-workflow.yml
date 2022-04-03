@@ -26,7 +26,7 @@ jobs:
       - name: Login GHCR
         run: echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
       - name: Docker Build Image tags
-        run: docker build -f dockerfile -t "ghcr.io/$GITHUB_REPOSITORY:${{ steps.branch_name.outputs.SOURCE_TAG }}" .
+        run: docker build -f Dockerfile -t "ghcr.io/$GITHUB_REPOSITORY:${{ steps.branch_name.outputs.SOURCE_TAG }}" .
       - name: Push to ghcr.io tags
         run: docker push ghcr.io/$GITHUB_REPOSITORY:${{ steps.branch_name.outputs.SOURCE_TAG }}
       - name: Docker Build Image Latest
