@@ -2,6 +2,7 @@ package order
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 
 	"github.com/christianmahardhika/mini-be-services-ecommerce/pkg/helper"
@@ -48,6 +49,8 @@ func (uc *useCase) PlaceOrder() (*[]Order, error) {
 		return nil, errors.New("failed to get cart")
 	}
 
+	var totalCart int64
+
 	for _, cart := range res {
 		var order Order
 		resProduct, err := uc.repo.GetProductByID(cart.ProductID)
@@ -75,12 +78,24 @@ func (uc *useCase) PlaceOrder() (*[]Order, error) {
 		order.PromoCode = resProduct.Promo
 		order.Total = totalResultPrice
 
+		totalCart = totalCart + totalResultPrice
+
 		err = uc.repo.Create(&order)
 		if err != nil {
 			return nil, err
 		}
 	}
+
+	// calculate total cart
+	fmt.Println(totalCart)
 	resultOrder, err := uc.repo.GetByOrderID(orderID)
+	for _, order := range resultOrder {
+		order.TotalCart = totalCart
+		err = uc.repo.Upsert(&order)
+	}
+
+	// show all order
+	resultOrder, err = uc.repo.GetByOrderID(orderID)
 	return &resultOrder, err
 
 }

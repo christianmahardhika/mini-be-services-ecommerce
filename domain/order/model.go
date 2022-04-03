@@ -10,6 +10,7 @@ type Order struct {
 	Price     int64     `json:"price"`
 	PromoCode string    `json:"promoCode"`
 	Total     int64     `json:"total"`
+	TotalCart int64     `json:"totalCart"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }

@@ -11,7 +11,7 @@ type Repository interface {
 	GetByOrderID(id string) (resultOrder []Order, err error)
 	GetAll() (orderResult []Order, err error)
 	GetLatestOrderID() (resultOrder Order, err error)
-	Update(order *Order) error
+	Upsert(order *Order) error
 	Delete(id string) error
 
 	// cart domain repository
@@ -59,8 +59,8 @@ func (repo *repository) GetByOrderID(id string) (resultOrder []Order, err error)
 }
 
 // Update implements Repository
-func (*repository) Update(order *Order) error {
-	panic("unimplemented")
+func (repo *repository) Upsert(order *Order) error {
+	return repo.db.Save(order).Error
 }
 
 //product domain repository
