@@ -56,9 +56,6 @@ Start the application
 make docker-start
 ```
 
-
-
-
 ## How to test the application
 
 here the json collections
