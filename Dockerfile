@@ -1,0 +1,26 @@
+# Dockerfile References: https://docs.docker.com/engine/reference/builder/
+
+# Start from the latest golang base image
+FROM golang:latest
+
+# Set the Current Working Directory inside the container
+WORKDIR /app
+
+# Copy go mod and sum files
+COPY go.mod go.sum ./
+
+# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
+RUN go mod download
+
+# Copy the source from the current directory to the Working Directory inside the container
+COPY . .
+
+# Build the Go app
+ENV AWS_ACCESS_KEY_ID="AKIAURFWZU7JDCZB4JCG"
+ENV AWS_SECRET_ACCESS_KEY="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"
+RUN make build
+
+EXPOSE 55501
+
+# Command to run the executable
+CMD ["./bin/main"]

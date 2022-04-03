@@ -48,11 +48,16 @@ ALLOWED_ORIGINS=["*"]
 ALLOWED_HEADERS=["*"]
 ```
 
+this application use makefile to run build, test, deploy, etc
+
 Start the application
 
 ```bash
-docker-compose up -d
+make docker-start
 ```
+
+
+
 
 ## How to test the application
 
@@ -62,5 +67,5 @@ here the json collections
 run testing command
 
 ```bash
-go test ./domain/... -v 
+make test
 ```
