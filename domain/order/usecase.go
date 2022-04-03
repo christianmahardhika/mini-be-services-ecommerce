@@ -88,10 +88,10 @@ func (uc *useCase) PlaceOrder() (*[]Order, error) {
 
 	// calculate total cart
 	fmt.Println(totalCart)
-	resultOrder, err := uc.repo.GetByOrderID(orderID)
+	resultOrder, _ := uc.repo.GetByOrderID(orderID)
 	for _, order := range resultOrder {
 		order.TotalCart = totalCart
-		err = uc.repo.Upsert(&order)
+		uc.repo.Upsert(&order)
 	}
 
 	// show all order
