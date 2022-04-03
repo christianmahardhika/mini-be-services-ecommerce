@@ -14,5 +14,5 @@ type useCase struct {
 
 // SearchProducts implements UseCase
 func (uc *useCase) SearchProducts(keyword string) (results []*Products, err error) {
-	return uc.repo.GetByKeyword(keyword)
+	return uc.repo.FindByKeyword(keyword)
 }

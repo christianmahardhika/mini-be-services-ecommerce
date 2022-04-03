@@ -58,3 +58,9 @@ docker-compose up -d
 
 here the json collections
 <https://documenter.getpostman.com/view/4625022/UVysxFmE>
+
+run testing command
+
+```bash
+go test ./domain/... -v 
+```

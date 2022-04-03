@@ -10,15 +10,14 @@ type Repository interface {
 	Create(order *Order) error
 	GetByOrderID(id string) (resultOrder []Order, err error)
 	GetAll() (orderResult []Order, err error)
-	GetLatestOrderID() (resultOrder Order, err error)
+	GetLatestOrderID() (resultOrder *Order, err error)
 	Upsert(order *Order) error
-	Delete(id string) error
 
 	// cart domain repository
 	GetAllCart() (resultCart []cart.Cart, err error)
 
 	//product domain repository
-	GetProductByID(id uint64) (resultProduct products.Products, err error)
+	GetProductByID(id uint64) (resultProduct *products.Products, err error)
 	UpdateProduct(product *products.Products) error
 }
 
@@ -31,7 +30,7 @@ type repository struct {
 }
 
 // GetLatestOrderID implements Repository
-func (repo *repository) GetLatestOrderID() (resultOrder Order, err error) {
+func (repo *repository) GetLatestOrderID() (resultOrder *Order, err error) {
 	res := repo.db.Order("order_id desc").First(&resultOrder).Limit(1)
 	return resultOrder, res.Error
 }
@@ -39,11 +38,6 @@ func (repo *repository) GetLatestOrderID() (resultOrder Order, err error) {
 // Create implements Repository
 func (repo *repository) Create(order *Order) error {
 	return repo.db.Create(order).Error
-}
-
-// Delete implements Repository
-func (*repository) Delete(id string) error {
-	panic("unimplemented")
 }
 
 // GetAll implements Repository
@@ -65,7 +59,7 @@ func (repo *repository) Upsert(order *Order) error {
 
 //product domain repository
 // GetProductByID implements Repository
-func (repo *repository) GetProductByID(id uint64) (resultProduct products.Products, err error) {
+func (repo *repository) GetProductByID(id uint64) (resultProduct *products.Products, err error) {
 	res := repo.db.Where("ID = ?", id).Find(&resultProduct)
 	return resultProduct, res.Error
 }
