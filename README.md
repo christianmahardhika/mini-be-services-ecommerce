@@ -2,6 +2,26 @@
 
 Mini project of ecommerce specific cart service.
 
+## **Description**
+
+This application only contain cart, order service and light products service
+
+the products service only show searched product(s)
+
+What you can do in this app?
+
+- Search Product(s)
+
+- Add item to cart
+
+- Get cart info
+
+- Delete item from cart
+
+- Reset the cart
+
+- Checkout the cart
+
 ## **How to use?**
 
 Makesure install Docker in your machine
@@ -28,12 +48,21 @@ ALLOWED_ORIGINS=["*"]
 ALLOWED_HEADERS=["*"]
 ```
 
+this application use makefile to run build, test, deploy, etc
+
 Start the application
 
 ```bash
-docker-compose up -d
+make docker-start
 ```
 
 ## How to test the application
 
 here the json collections
+<https://documenter.getpostman.com/view/4625022/UVysxFmE>
+
+run testing command
+
+```bash
+make test
+```

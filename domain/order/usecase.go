@@ -2,7 +2,6 @@ package order
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 
 	"github.com/christianmahardhika/mini-be-services-ecommerce/pkg/helper"
@@ -10,7 +9,7 @@ import (
 )
 
 type UseCase interface {
-	PlaceOrder() (resultOrder *[]Order, err error)
+	PlaceOrder() (resultOrder []Order, err error)
 }
 
 func NewUseCase(repo Repository) UseCase {
@@ -22,7 +21,7 @@ type useCase struct {
 }
 
 // PlaceOrder implements UseCase
-func (uc *useCase) PlaceOrder() (*[]Order, error) {
+func (uc *useCase) PlaceOrder() ([]Order, error) {
 
 	// Get latest order ID
 	var orderID string
@@ -62,7 +61,7 @@ func (uc *useCase) PlaceOrder() (*[]Order, error) {
 			return nil, errors.New("stock is not enough")
 		}
 		resProduct.Stock -= cart.Quantity
-		uc.repo.UpdateProduct(&resProduct)
+		uc.repo.UpdateProduct(resProduct)
 
 		// calculate Promo Price
 
@@ -87,15 +86,14 @@ func (uc *useCase) PlaceOrder() (*[]Order, error) {
 	}
 
 	// calculate total cart
-	fmt.Println(totalCart)
-	resultOrder, err := uc.repo.GetByOrderID(orderID)
+	resultOrder, _ := uc.repo.GetByOrderID(orderID)
 	for _, order := range resultOrder {
 		order.TotalCart = totalCart
-		err = uc.repo.Upsert(&order)
+		uc.repo.Upsert(&order)
 	}
 
 	// show all order
 	resultOrder, err = uc.repo.GetByOrderID(orderID)
-	return &resultOrder, err
+	return resultOrder, err
 
 }

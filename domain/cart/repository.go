@@ -4,7 +4,6 @@ import "gorm.io/gorm"
 
 type Repository interface {
 	GetAll() ([]Cart, error)
-	GetByID(cartID string) (*Cart, error)
 	UpdateInsert(cart *Cart) error
 	Delete(cartID int64) error
 	DeleteAll() error
@@ -39,9 +38,4 @@ func (repo *repository) Delete(cartID int64) error {
 func (repo *repository) GetAll() (cartResult []Cart, err error) {
 	res := repo.db.Find(&cartResult)
 	return cartResult, res.Error
-}
-
-// GetByID implements Repository
-func (*repository) GetByID(cartID string) (*Cart, error) {
-	panic("unimplemented")
 }
