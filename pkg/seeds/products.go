@@ -6,5 +6,5 @@ import (
 )
 
 func CreateProducts(db *gorm.DB, name string, price int64, promo string, qty int64) error {
-	return db.Create(&products.Products{Name: name, Price: price, Promo: promo, Quantity: qty}).Error
+	return db.Create(&products.Products{Name: name, Price: price, Promo: promo, Stock: qty}).Error
 }

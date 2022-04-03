@@ -3,11 +3,12 @@ package server
 import (
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/cart"
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/helloworld"
+	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/order"
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/products"
 	"github.com/gin-gonic/gin"
 )
 
-func initiateRouter(r *gin.Engine, helloworldController helloworld.Controller, productController products.Controller, cartController cart.Controller) *gin.Engine {
+func initiateRouter(r *gin.Engine, helloworldController helloworld.Controller, productController products.Controller, cartController cart.Controller, orderController order.Controller) *gin.Engine {
 	r.GET("/", helloworldController.HeloFunction)
 
 	// Product Domain Routes
@@ -18,6 +19,9 @@ func initiateRouter(r *gin.Engine, helloworldController helloworld.Controller, p
 	r.GET("/cart/reset", cartController.ResetCart)
 	r.GET("/cart/delete", cartController.DeleteItemFromCart)
 	r.GET("/cart", cartController.GetCartInfo)
+
+	// Order Domain Routes
+	r.GET("/order/checkout", orderController.CreateOrder)
 
 	return r
 }
