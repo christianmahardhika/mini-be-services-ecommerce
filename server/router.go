@@ -2,14 +2,12 @@ package server
 
 import (
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/cart"
-	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/helloworld"
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/order"
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/products"
 	"github.com/gin-gonic/gin"
 )
 
-func initiateRouter(r *gin.Engine, helloworldController helloworld.Controller, productController products.Controller, cartController cart.Controller, orderController order.Controller) *gin.Engine {
-	r.GET("/", helloworldController.HeloFunction)
+func initiateRouter(r *gin.Engine, productController products.Controller, cartController cart.Controller, orderController order.Controller) *gin.Engine {
 
 	// Product Domain Routes
 	r.GET("/products", productController.SearchProducts)
