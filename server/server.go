@@ -4,6 +4,7 @@ import (
 	"github.com/christianmahardhika/mini-be-services-ecommerce/config"
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/cart"
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/helloworld"
+	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/order"
 	"github.com/christianmahardhika/mini-be-services-ecommerce/domain/products"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -23,12 +24,14 @@ func InitiatializeGinServer(appConfig config.AppConfig) *gin.Engine {
 	// Instantiate the usecase
 	productUC := products.NewUseCase(products.NewRepository(dbConnection))
 	cartUC := cart.NewUseCase(cart.NewRepository(dbConnection))
+	orderUC := order.NewUseCase(order.NewRepository(dbConnection))
 
 	// Instantiate the controller
 	helloworldController := helloworld.Controller{}
 	productController := products.Controller{UseCase: productUC}
 	cartController := cart.Controller{UseCase: cartUC}
+	orderController := order.Controller{UseCase: orderUC}
 
 	// call the router
-	return initiateRouter(r, helloworldController, productController, cartController)
+	return initiateRouter(r, helloworldController, productController, cartController, orderController)
 }
