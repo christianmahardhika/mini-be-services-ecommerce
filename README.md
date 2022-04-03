@@ -72,3 +72,8 @@ make test
  This app build follow clean code pattern by Uncle Bob <https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html> the idea is for scalability. The app can be separate into services each domain easily because the business process separate with controller (http server) and data (as repository). 
 
 
+You can pull the image on GHCR here
+
+```bash
+docker pull ghcr.io/christianmahardhika/mini-be-services-ecommerce:latest
+```
