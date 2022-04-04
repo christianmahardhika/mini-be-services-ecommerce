@@ -58,6 +58,12 @@ make docker-start
 
 ## How to test the application
 
+Port:
+
+```text
+locakhost:55501
+```
+
 here the json collections
 <https://documenter.getpostman.com/view/4625022/UVysxFmE>
 
