@@ -10,9 +10,11 @@ import (
 
 func InitiateConfig() config.AppConfig {
 	// InitiateConfig is a function that initiates the configuration.
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if os.Getenv("APP_ENV") == "development" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
 	}
 	var appConfig config.AppConfig
 	// Load Database configuration
