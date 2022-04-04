@@ -6,6 +6,9 @@ services:
     ports:
       - "55501:55501"
     container_name: mini-be-services-ecommerce-app
+    env_file:
+      - fileName: .env
+        filePath: .
     depends_on:
       db:
         condition: service_healthy
