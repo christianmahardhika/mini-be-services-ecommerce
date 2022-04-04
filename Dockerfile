@@ -18,6 +18,7 @@ COPY . .
 # Build the Go app
 RUN make build
 
+EXPOSE 8080
 
 # Command to run the executable
 CMD ["./bin/main"]

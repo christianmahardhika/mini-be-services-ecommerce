@@ -39,7 +39,7 @@ create <.env> file and fill this variable
 DB_USER=postgres
 DB_PASS=root
 DB_PORT=5432
-DB_HOST=localhost
+DB_HOST=db
 DB_NAME=ecommerce
 DB_SSL_MODE=disable
 PORT=8080

@@ -6,7 +6,8 @@ services:
     ports:
       - 8080:8080
     container_name: mini-be-services-ecommerce-app
-    env_file: .env
+    env_file: 
+    - ./.env
     depends_on:
       db:
         condition: service_healthy
