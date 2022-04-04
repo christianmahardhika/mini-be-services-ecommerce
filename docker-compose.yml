@@ -4,7 +4,7 @@ services:
   apps:
     image: ghcr.io/christianmahardhika/mini-be-services-ecommerce:latest
     ports:
-      - "55501:55501"
+      - 8080:8080
     container_name: mini-be-services-ecommerce-app
     env_file: .env
     depends_on:
