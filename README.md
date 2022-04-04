@@ -42,7 +42,7 @@ DB_PORT=5432
 DB_HOST=localhost
 DB_NAME=ecommerce
 DB_SSL_MODE=disable
-PORT=55501
+PORT=8080
 
 ALLOWED_ORIGINS=["*"]
 ALLOWED_HEADERS=["*"]
@@ -61,7 +61,7 @@ make docker-start
 Port:
 
 ```text
-locakhost:55501
+locakhost:8080
 ```
 
 here the json collections
