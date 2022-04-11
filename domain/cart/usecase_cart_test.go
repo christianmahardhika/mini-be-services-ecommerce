@@ -3,6 +3,7 @@ package cart
 import (
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -12,14 +13,14 @@ var cartService = useCase{repo: cartRepository}
 
 func TestCartService_GetCartInfoSuccess(t *testing.T) {
 	cart := []Cart{
-		Cart{
-			ID:        9,
-			ProductID: 140,
+		{
+			ID:        uuid.New().String(),
+			ProductID: uuid.New().String(),
 			Quantity:  8,
 		},
-		Cart{
-			ID:        10,
-			ProductID: 137,
+		{
+			ID:        uuid.New().String(),
+			ProductID: uuid.New().String(),
 			Quantity:  8,
 		},
 	}
@@ -50,8 +51,8 @@ func TestCartService_ResetCartSuccess(t *testing.T) {
 
 func TestCartService_AddItemToCartSuccess(t *testing.T) {
 	item := Cart{
-		ID:        9,
-		ProductID: 140,
+		ID:        uuid.New().String(),
+		ProductID: uuid.New().String(),
 		Quantity:  8,
 	}
 	cartRepository.Mock.On("UpdateInsert", &item).Return(item)
