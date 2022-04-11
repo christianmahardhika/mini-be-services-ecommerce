@@ -1,6 +1,6 @@
 # mini-be-services-ecommerce
 
-[![Unit Test Actions Status](https://github.com/christianmahardhika/mini-be-services-ecommerce/workflows/test/badge.svg)](https://github.com/christianmahardhika/mini-be-services-ecommerce/actions)
+[![Unit Test Actions Status](https://github.com/christianmahardhika/mini-be-services-ecommerce/workflows/unit-test/badge.svg)](https://github.com/christianmahardhika/mini-be-services-ecommerce/actions)
 
 Mini project of ecommerce specific cart service.
 
