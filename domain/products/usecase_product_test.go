@@ -23,17 +23,17 @@ func TestProductsService_GetFail(t *testing.T) {
 func TestProductsService_GetSuccess(t *testing.T) {
 	product := []*Products{
 		{
-			ID:      uuid.New(),
+			ID:      uuid.New().String(),
 			Name:    "Product 1",
 			Price:   100000,
-			PromoID: uuid.New(),
+			PromoID: uuid.New().String(),
 			Stock:   10,
 		},
 		{
-			ID:      uuid.New(),
+			ID:      uuid.New().String(),
 			Name:    "Product 2",
 			Price:   100000,
-			PromoID: uuid.New(),
+			PromoID: uuid.New().String(),
 			Stock:   10,
 		},
 	}

@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/christianmahardhika/mini-be-services-ecommerce/pkg/helper"
-	"github.com/google/uuid"
 )
 
 type UseCase interface {
@@ -24,9 +23,17 @@ func (uc *useCase) PlaceOrder() (*InvoiceOrder, error) {
 
 	// Create order
 	var order Order
-	UserId := uuid.New()
+	UserId := "1"
 	order = Order{
-		UserID: UserId,
+		UserID:    UserId,
+		TotalCart: 0,
+	}
+
+	// uc.repo.CreateOrder(&order)
+
+	err := uc.repo.CreateOrder(&order)
+	if err != nil {
+		return nil, err
 	}
 
 	res, err := uc.repo.GetAllCart()
@@ -60,7 +67,7 @@ func (uc *useCase) PlaceOrder() (*InvoiceOrder, error) {
 		if err != nil {
 			return nil, err
 		}
-
+		orderDetail.OrderID = order.ID
 		orderDetail.ProductID = cart.ProductID
 		orderDetail.Quantity = cart.Quantity
 		orderDetail.Price = resProduct.Price
@@ -69,7 +76,9 @@ func (uc *useCase) PlaceOrder() (*InvoiceOrder, error) {
 
 		totalCart = totalCart + totalResultPrice
 
-		err = uc.repo.Create(&order)
+		// uc.repo.CreateOrderDetail(&orderDetail)
+
+		err = uc.repo.CreateOrderDetail(&orderDetail)
 		if err != nil {
 			return nil, err
 		}
@@ -89,6 +98,6 @@ func (uc *useCase) PlaceOrder() (*InvoiceOrder, error) {
 
 	InvoiceOrder.Order = order
 	InvoiceOrder.OrderDetail = resOrderDetail
-	return &InvoiceOrder, err
+	return &InvoiceOrder, nil
 
 }

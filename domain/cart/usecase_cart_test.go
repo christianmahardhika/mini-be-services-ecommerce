@@ -14,13 +14,13 @@ var cartService = useCase{repo: cartRepository}
 func TestCartService_GetCartInfoSuccess(t *testing.T) {
 	cart := []Cart{
 		{
-			ID:        uuid.New(),
-			ProductID: uuid.New(),
+			ID:        uuid.New().String(),
+			ProductID: uuid.New().String(),
 			Quantity:  8,
 		},
 		{
-			ID:        uuid.New(),
-			ProductID: uuid.New(),
+			ID:        uuid.New().String(),
+			ProductID: uuid.New().String(),
 			Quantity:  8,
 		},
 	}
@@ -51,8 +51,8 @@ func TestCartService_ResetCartSuccess(t *testing.T) {
 
 func TestCartService_AddItemToCartSuccess(t *testing.T) {
 	item := Cart{
-		ID:        uuid.New(),
-		ProductID: uuid.New(),
+		ID:        uuid.New().String(),
+		ProductID: uuid.New().String(),
 		Quantity:  8,
 	}
 	cartRepository.Mock.On("UpdateInsert", &item).Return(item)
