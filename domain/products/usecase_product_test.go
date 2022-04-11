@@ -3,6 +3,7 @@ package products
 import (
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -22,18 +23,18 @@ func TestProductsService_GetFail(t *testing.T) {
 func TestProductsService_GetSuccess(t *testing.T) {
 	product := []*Products{
 		&Products{
-			ID:    1,
-			Name:  "Product 1",
-			Price: 100000,
-			Promo: "BELI2GRATIS1",
-			Stock: 10,
+			ID:      uuid.New(),
+			Name:    "Product 1",
+			Price:   100000,
+			PromoID: uuid.New(),
+			Stock:   10,
 		},
 		&Products{
-			ID:    1,
-			Name:  "Product 2",
-			Price: 100000,
-			Promo: "BELI3GRATIS1",
-			Stock: 10,
+			ID:      uuid.New(),
+			Name:    "Product 2",
+			Price:   100000,
+			PromoID: uuid.New(),
+			Stock:   10,
 		},
 	}
 

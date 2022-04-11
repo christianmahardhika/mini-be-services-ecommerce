@@ -2,14 +2,13 @@ package order
 
 import (
 	"errors"
-	"strconv"
 
 	"github.com/christianmahardhika/mini-be-services-ecommerce/pkg/helper"
-	"gorm.io/gorm"
+	"github.com/google/uuid"
 )
 
 type UseCase interface {
-	PlaceOrder() (resultOrder []Order, err error)
+	PlaceOrder() (resultOrder *InvoiceOrder, err error)
 }
 
 func NewUseCase(repo Repository) UseCase {
@@ -21,27 +20,14 @@ type useCase struct {
 }
 
 // PlaceOrder implements UseCase
-func (uc *useCase) PlaceOrder() ([]Order, error) {
+func (uc *useCase) PlaceOrder() (*InvoiceOrder, error) {
 
-	// Get latest order ID
-	var orderID string
-	resOrderId, err := uc.repo.GetLatestOrderID()
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			orderID = "ODR0001"
-		} else {
-			return nil, errors.New("failed to get latest order ID")
-		}
-	} else {
-		orderID = resOrderId.OrderID
-		latestOrderID := orderID[len(orderID)-1:]
-		latestOrderIDInt, err := strconv.Atoi(latestOrderID)
-		if err != nil {
-			return nil, err
-		}
-		orderID = "ODR000" + strconv.Itoa(int(latestOrderIDInt)+1)
-	}
 	// Create order
+	var order Order
+	UserId := uuid.New()
+	order = Order{
+		UserID: UserId,
+	}
 
 	res, err := uc.repo.GetAllCart()
 	if err != nil {
@@ -51,7 +37,7 @@ func (uc *useCase) PlaceOrder() ([]Order, error) {
 	var totalCart int64
 
 	for _, cart := range res {
-		var order Order
+		var orderDetail OrderDetail
 		resProduct, err := uc.repo.GetProductByID(cart.ProductID)
 		if err != nil {
 			return nil, err
@@ -63,19 +49,23 @@ func (uc *useCase) PlaceOrder() ([]Order, error) {
 		resProduct.Stock -= cart.Quantity
 		uc.repo.UpdateProduct(resProduct)
 
+		// find promo
+		resPromo, err := uc.repo.FindPromoByID(resProduct.PromoID)
+		if err != nil {
+			return nil, err
+		}
 		// calculate Promo Price
 
-		totalResultPrice, err := helper.PromoHelper(resProduct.Promo, resProduct.Price, cart.Quantity)
+		totalResultPrice, err := helper.PromoHelper(resPromo.Discount, resProduct.Price, cart.Quantity)
 		if err != nil {
 			return nil, err
 		}
 
-		order.OrderID = orderID
-		order.ProductID = cart.ProductID
-		order.Quantity = cart.Quantity
-		order.Price = resProduct.Price
-		order.PromoCode = resProduct.Promo
-		order.Total = totalResultPrice
+		orderDetail.ProductID = cart.ProductID
+		orderDetail.Quantity = cart.Quantity
+		orderDetail.Price = resProduct.Price
+		orderDetail.PromoCode = resPromo.PromoCode
+		orderDetail.Total = totalResultPrice
 
 		totalCart = totalCart + totalResultPrice
 
@@ -85,15 +75,20 @@ func (uc *useCase) PlaceOrder() ([]Order, error) {
 		}
 	}
 
-	// calculate total cart
-	resultOrder, _ := uc.repo.GetByOrderID(orderID)
-	for _, order := range resultOrder {
-		order.TotalCart = totalCart
-		uc.repo.Upsert(&order)
-	}
+	// update total cart
+	order.TotalCart = totalCart
+	uc.repo.Upsert(&order)
 
 	// show all order
-	resultOrder, err = uc.repo.GetByOrderID(orderID)
-	return resultOrder, err
+	resOrderDetail, err := uc.repo.FindAllOrderDetailByOrderID(order.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	var InvoiceOrder InvoiceOrder
+
+	InvoiceOrder.Order = order
+	InvoiceOrder.OrderDetail = resOrderDetail
+	return &InvoiceOrder, err
 
 }

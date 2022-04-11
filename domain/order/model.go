@@ -25,3 +25,8 @@ type Order struct {
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
+
+type InvoiceOrder struct {
+	Order 	Order
+	OrderDetail []OrderDetail
+}
