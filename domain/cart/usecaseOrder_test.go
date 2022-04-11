@@ -13,12 +13,12 @@ var cartService = useCase{repo: cartRepository}
 
 func TestCartService_GetCartInfoSuccess(t *testing.T) {
 	cart := []Cart{
-		Cart{
+		{
 			ID:        uuid.New(),
 			ProductID: uuid.New(),
 			Quantity:  8,
 		},
-		Cart{
+		{
 			ID:        uuid.New(),
 			ProductID: uuid.New(),
 			Quantity:  8,

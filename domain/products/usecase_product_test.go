@@ -22,14 +22,14 @@ func TestProductsService_GetFail(t *testing.T) {
 
 func TestProductsService_GetSuccess(t *testing.T) {
 	product := []*Products{
-		&Products{
+		{
 			ID:      uuid.New(),
 			Name:    "Product 1",
 			Price:   100000,
 			PromoID: uuid.New(),
 			Stock:   10,
 		},
-		&Products{
+		{
 			ID:      uuid.New(),
 			Name:    "Product 2",
 			Price:   100000,

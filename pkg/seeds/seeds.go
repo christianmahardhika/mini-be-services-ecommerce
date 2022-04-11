@@ -7,7 +7,7 @@ import (
 
 func All() []seed.Seed {
 	return []seed.Seed{
-		seed.Seed{
+		{
 			Name: "Insert Products",
 			Run: func(db *gorm.DB) error {
 				var err error
